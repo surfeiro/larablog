@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a class="btn btn-success mt-3 mb-3" href="{{ route('post.create')}}">Crear</a>
+<a class="btn btn-success mt-3 mb-3" href="{{ route('user.create')}}">Crear</a>
 <table class="table">
     <thead>
         <tr>
@@ -10,52 +10,55 @@
                 Id
             </td>
             <td>
-                Titulo
+                Nombre
             </td>
             <td>
-                Categoría
+                Apellido
             </td>
             <td>
-                Posteado
+                Email
             </td>
             <td>
-                Creación
+                Rol
             </td>
             <td>
                 Actualización
             </td>
             <td>
-                Acciones
+                Accciones
             </td>
         </tr>
 
     </thead>
     <tbody>
-        @foreach ($posts as $post)
+        @foreach ($users as $user)
         <tr>            
             <td>
-                {{$post->id}}
+                {{$user->id}}
             </td>
             <td>
-                {{$post->title}}
+                {{$user->name}}
             </td>
             <td>
-              <!--  {/*{$post->category->title}*/} *********revisar esta mierda***************-->
+                {{$user->surname}}
             </td>
             <td>
-                {{$post->posted}}
+                {{$user->email}}
             </td>
             <td>
-                {{$post->created_at->format('d-m-Y')}}
+                {{$user->rol->key}}
             </td>
             <td>
-                {{$post->updated_at->format('d-m-Y')}}
+                {{$user->created_at->format('d-m-Y')}}
             </td>
             <td>
-                <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary">Ver</a>
-                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Actualizar</a>
+                {{$user->updated_at->format('d-m-Y')}}
+            </td>
+            <td>
+                <a href="{{ route('user.show', $user->id) }}" class="btn btn-primary">Ver</a>
+                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">Actualizar</a>
                          
-                <button type="button"  data-bs-toggle="modal" data-bs-target="#deleteModal" id="{{$post->id}}" class="btn btn-danger">Eliminar</button>
+                <button type="button"  data-bs-toggle="modal" data-bs-target="#deleteModal" id="{{$user->id}}" class="btn btn-danger">Eliminar</button>
     
   
             </td>
@@ -65,7 +68,7 @@
 </table>
 
 
-{{ $posts->links() }}
+{{ $users->links() }}
 
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -82,7 +85,7 @@
           <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
 
-          <form id="formDelete"  method="POST" action="{{ route('post.destroy', 0) }}" data-action="{{ route('post.destroy', 0) }}">
+          <form id="formDelete"  method="post" action="{{ route('user.destroy', 0) }}" data-action="{{ route('user.destroy', 0) }}">
             @method('DELETE')
             @csrf
             <button type="submit" class="btn btn-danger">Borrar</button>
@@ -119,8 +122,8 @@ window.onload = function(){
   console.log(action);
   $('#formDelete').attr('action',action)
   var modal = $(this)
-    modal.find('.modal-title').text('vas a borrar el POST: '+ id)
-  //modalTitle.textContent = 'Vas a borrar el POST ' + id
+    modal.find('.modal-title').text('vas a borrar la categoría: '+ id)
+  //modalTitle.textContent = 'Vas a borrar el user ' + id
 //    })
 });
 }
